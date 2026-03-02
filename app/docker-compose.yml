@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # SERVICIO 1: TU APLICACIÓN
+  mi-api:
+    build: .              # Construye el Dockerfile que hay aquí
+    ports:
+      - "8080:8080"       # Saca la API al exterior
+    environment:
+      - DB_HOST=base-datos # <--- AQUÍ ESTÁ LA CLAVE. Le decimos que busque al vecino.
+    depends_on:
+      - base-datos        # Espera a que la BD arranque (un poco)
+    restart: always       # Si falla al conectar (porque la BD es lenta), reinténtalo
+
+  # SERVICIO 2: LA BASE DE DATOS
+  base-datos:
+    image: mysql:8.0
+    container_name: db-mysql-final
+    environment:
+      MYSQL_ROOT_PASSWORD: password123
+      MYSQL_DATABASE: mi_app_db
+    volumes:
+      - ./datos-produccion:/var/lib/mysql # Guardamos datos en una carpeta nueva
