@@ -50,7 +50,7 @@ func main() {
 
     // 4. SERVIDOR WEB
     http.HandleFunc("/usuarios", obtenerUsuarios)
-    fmt.Println("🚀 Servidor API corriendo en el puerto 8080")
+    fmt.Println("¡Hola desde la versión 2.0 automatizada con CI/CD")
     http.ListenAndServe(":8080", nil)
 }
 

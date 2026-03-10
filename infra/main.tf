@@ -61,7 +61,13 @@ resource "aws_instance" "mi_servidor_web" {
               sudo apt-get install -y docker.io
               
               echo "Iniciando tu API en el puerto 80..."
-              sudo docker run -d -p 80:8080 x3mzjd/backend-usuarios-go:v1.0.0
+              sudo docker run -d --name mi-api -p 80:8080 x3mzjd/backend-usuarios-go:latest
+              
+              echo "Iniciando El Vigia (Watchtower)..."
+              sudo docker run -d \
+                --name vigia \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                containrrr/watchtower --interval 30 mi-api
               EOF
   tags = {
      Name = "Servidor-App-Usuarios"
